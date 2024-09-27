@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace DI\HKT\Definition;
 
-use DI\Definition\Dumper\ObjectDefinitionDumper;
-use DI\Definition\ObjectDefinition\PropertyInjection;
-use DI\Definition\Source\DefinitionArray;
 use DI\HKT\Container\TypeParameters\TypeParametersInterface;
+use DI\HKT\Definition\Dumper\ObjectDefinitionDumper;
 use DI\HKT\Definition\ObjectDefinition\MethodInjection;
+use DI\HKT\Definition\ObjectDefinition\PropertyInjection;
+use DI\HKT\Definition\Source\DefinitionArray;
 use ReflectionClass;
 
 /**
