@@ -49,19 +49,19 @@ class HigherKindedContainerGetTest extends TestCase
         $this->assertInstanceOf(stdClass::class, $container->get(stdClass::class));
     }
 
-    // public function testGetResolvesEntryOnce()
-    // {
-    //     $container = new Container;
-    //     $this->assertSame($container->get('stdClass'), $container->get('stdClass'));
-    // }
+    public function testGetResolvesEntryOnce() : void
+    {
+        $container = new HigherKindedContainer;
+        $this->assertSame($container->get('stdClass'), $container->get('stdClass'));
+    }
 
-    // /**
-    //  * Tests a class can be initialized with a parameter passed by reference.
-    //  */
-    // public function testPassByReferenceParameter()
-    // {
-    //     $container = new Container;
-    //     $object = $container->get(PassByReferenceDependency::class);
-    //     $this->assertInstanceOf(PassByReferenceDependency::class, $object);
-    // }
+    /**
+     * Tests a class can be initialized with a parameter passed by reference.
+     */
+    public function testPassByReferenceParameter() : void
+    {
+        $container = new HigherKindedContainer;
+        $object = $container->get(PassByReferenceDependency::class);
+        $this->assertInstanceOf(PassByReferenceDependency::class, $object);
+    }
 }

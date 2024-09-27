@@ -6,6 +6,7 @@ namespace DI\HKT\Definition;
 
 use DI\HKT\Container\HigherKindedContainerInterface;
 use DI\HKT\Container\TypeParameters\TypeParametersInterface;
+use DI\HKT\TypeParameters\GenericTypeParameters;
 
 /**
  * Represents a reference to another entry.
@@ -15,10 +16,13 @@ use DI\HKT\Container\TypeParameters\TypeParametersInterface;
  */
 class Reference implements Definition, SelfResolvingDefinition
 {
+    private TypeParametersInterface $typeParameters;
+
     public function __construct(
         private string $name,
-        private TypeParametersInterface $typeParameters,
+
     ) {
+        $this->typeParameters = GenericTypeParameters::createEmpty();
     }
 
     public function getName() : string
