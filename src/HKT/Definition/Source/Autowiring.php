@@ -21,5 +21,5 @@ interface Autowiring
      *
      * @throws InvalidDefinition An invalid definition was found.
      */
-    public function autowire(string $name, TypeParametersInterface $typeParameters, ?ObjectDefinition $definition = null) : ?ObjectDefinition;
+    public function autowireUnsafe(string $name, TypeParametersInterface $typeParameters, ?ObjectDefinition $definition = null) : ObjectDefinition;
 }

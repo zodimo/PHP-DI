@@ -59,7 +59,7 @@ class DefinitionNormalizer
 
         if ($definition instanceof AutowireDefinition) {
             /** @var AutowireDefinition $definition */
-            $definition = $this->autowiring->autowire($name, $definition);
+            $definition = $this->autowiring->autowireUnsafe($name, $definition);
         }
 
         $definition->setName($name);
@@ -99,7 +99,7 @@ class DefinitionNormalizer
         }
 
         if ($definition instanceof AutowireDefinition) {
-            $definition = $this->autowiring->autowire($name, $definition);
+            $definition = $this->autowiring->autowireUnsafe($name, $definition);
         }
 
         if ($definition instanceof Definition) {

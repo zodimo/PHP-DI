@@ -43,11 +43,11 @@ class HigherKindedContainerGetTest extends TestCase
         $this->assertEquals('hello', $container->get('key'));
     }
 
-    // public function testGetWithClassName()
-    // {
-    //     $container = new Container;
-    //     $this->assertInstanceOf('stdClass', $container->get('stdClass'));
-    // }
+    public function testGetWithClassName() : void
+    {
+        $container = new HigherKindedContainer;
+        $this->assertInstanceOf(stdClass::class, $container->get(stdClass::class));
+    }
 
     // public function testGetResolvesEntryOnce()
     // {

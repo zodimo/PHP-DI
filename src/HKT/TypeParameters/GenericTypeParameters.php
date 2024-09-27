@@ -40,13 +40,13 @@ class GenericTypeParameters implements TypeParametersInterface
         $this->types[] = $typeParameter;
     }
 
-    public function equals(TypeParametersInterface $other) : bool
+    public function equals(TypeParametersInterface $typeParameters) : bool
     {
         /**
          * compare all types in sequence.
          */
         $thisTypePamaters = $this->getTypeParameters();
-        $otherTypeParameters = $other->getTypeParameters();
+        $otherTypeParameters = $typeParameters->getTypeParameters();
 
         if (count($thisTypePamaters) !== count($otherTypeParameters)) {
             return false;

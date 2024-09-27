@@ -15,7 +15,7 @@ use DI\HKT\Definition\ObjectDefinition;
  */
 class NoAutowiring implements Autowiring
 {
-    public function autowire(string $name, TypeParametersInterface $typeParameters, ?ObjectDefinition $definition = null) : ObjectDefinition
+    public function autowireUnsafe(string $name, TypeParametersInterface $typeParameters, ?ObjectDefinition $definition = null) : ObjectDefinition
     {
         throw new InvalidDefinition(sprintf(
             'Cannot autowire entry "%s" because autowiring is disabled',

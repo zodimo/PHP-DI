@@ -125,7 +125,7 @@ class HigherKindedContainer implements HigherKindedContainerInterface
             return $this->getResolvedEntryUnsafe($id, $typeParameters);
         }
 
-        $definition = $this->getDefinition($id, $typeParameters);
+        $definition = $this->getDefinitionUnsafe($id, $typeParameters);
 
         $value = $this->resolveDefinition($definition);
 
@@ -161,7 +161,7 @@ class HigherKindedContainer implements HigherKindedContainerInterface
 
     }
 
-    private function getDefinition(string $name, TypeParametersInterface $typeParameters) : Definition
+    private function getDefinitionUnsafe(string $name, TypeParametersInterface $typeParameters) : Definition
     {
         // Local cache that avoids fetching the same definition twice
         if (!$this->hasFetchedDefinition($name, $typeParameters)) {
@@ -172,6 +172,11 @@ class HigherKindedContainer implements HigherKindedContainerInterface
         }
 
         return $this->getFetchedDefinitionUnsafe($name, $typeParameters);
+    }
+
+    public function hasDefinition(string $name, TypeParametersInterface $typeParameters) : bool
+    {
+
     }
 
     public function has(string $id, ?TypeParametersInterface $typeParameters) : bool

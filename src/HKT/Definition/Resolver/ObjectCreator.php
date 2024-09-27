@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace DI\HKT\Definition\Resolver;
 
-use DI\Definition\ObjectDefinition\PropertyInjection;
-use DI\Definition\Resolver\ParameterResolver;
 use DI\DependencyException;
 use DI\HKT\Definition\Definition;
 use DI\HKT\Definition\Exception\InvalidDefinition;
 use DI\HKT\Definition\ObjectDefinition;
+use DI\HKT\Definition\ObjectDefinition\PropertyInjection;
 use DI\HKT\Proxy\ProxyFactory;
 use Exception;
 use ProxyManager\Proxy\LazyLoadingInterface;

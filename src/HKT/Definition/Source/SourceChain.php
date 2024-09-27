@@ -38,13 +38,16 @@ class SourceChain implements DefinitionSource, MutableDefinitionSource
         for ($i = $startIndex; $i < $count; ++$i) {
             $source = $this->sources[$i];
 
-            $definition = $source->getDefinition($name, $typeParameters);
+            if ($source->hasDefinition($name, $typeParameters)) {
+                $definition = $source->getDefinition($name, $typeParameters);
 
-            if ($definition instanceof ExtendsPreviousDefinition) {
-                $this->resolveExtendedDefinition($definition, $i);
+                if ($definition instanceof ExtendsPreviousDefinition) {
+                    $this->resolveExtendedDefinition($definition, $i);
+                }
+
+                return $definition;
             }
 
-            return $definition;
         }
 
         $typeParametersAsString = (string) $typeParameters;
@@ -80,5 +83,16 @@ class SourceChain implements DefinitionSource, MutableDefinitionSource
         $this->mutableSource = $mutableSource;
 
         array_unshift($this->sources, $mutableSource);
+    }
+
+    public function hasDefinition(string $name, TypeParametersInterface $typeParameters) : bool
+    {
+        $definitions = $this->getDefinitions();
+        $definitionMatches = array_filter($definitions, function (Definition $definition) use ($name, $typeParameters) {
+            return $name === $definition->getName() && $definition->getTypeParameters()->equals($typeParameters);
+        });
+
+        return count($definitionMatches) > 0;
+
     }
 }

@@ -29,4 +29,6 @@ interface DefinitionSource
      * @return array<string,Definition> Definitions indexed by their name.
      */
     public function getDefinitions() : array;
+
+    public function hasDefinition(string $name, TypeParametersInterface $typeParameters) : bool;
 }

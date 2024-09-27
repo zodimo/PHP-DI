@@ -66,7 +66,7 @@ class DefinitionArray implements DefinitionSource, MutableDefinitionSource
         $this->wildcardDefinitions = null;
     }
 
-    private function hasDefinition(string $name, TypeParametersInterface $typeParameters) : bool
+    public function hasDefinition(string $name, TypeParametersInterface $typeParameters) : bool
     {
         if ($typeParameters->hasTypeParameters()) {
             return isset($this->definitions[$name][$typeParameters->getHash()]);

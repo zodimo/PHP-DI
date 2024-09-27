@@ -16,4 +16,6 @@ interface TypeParametersInterface extends \Stringable
     public function getHash() : string;
 
     public function hasTypeParameters() : bool;
+
+    public function equals(self $typeParameters) : bool;
 }

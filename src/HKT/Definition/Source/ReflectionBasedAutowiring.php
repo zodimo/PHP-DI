@@ -19,7 +19,7 @@ use ReflectionNamedType;
  */
 class ReflectionBasedAutowiring implements DefinitionSource, Autowiring
 {
-    public function autowire(string $name, TypeParametersInterface $typeParameters, ?ObjectDefinition $definition = null) : ObjectDefinition
+    public function autowireUnsafe(string $name, TypeParametersInterface $typeParameters, ?ObjectDefinition $definition = null) : ObjectDefinition
     {
         $className = $definition ? $definition->getClassName() : $name;
 
@@ -46,7 +46,7 @@ class ReflectionBasedAutowiring implements DefinitionSource, Autowiring
 
     public function getDefinition(string $name, TypeParametersInterface $typeParameters) : ObjectDefinition
     {
-        return $this->autowire($name, $typeParameters);
+        return $this->autowireUnsafe($name, $typeParameters);
     }
 
     /**
@@ -88,5 +88,11 @@ class ReflectionBasedAutowiring implements DefinitionSource, Autowiring
         }
 
         return $parameters;
+    }
+
+    public function hasDefinition(string $name, TypeParametersInterface $typeParameters) : bool
+    {
+        // it is our last shot..
+        return true;
     }
 }
