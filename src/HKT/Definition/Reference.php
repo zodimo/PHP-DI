@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DI\HKT\Definition;
 
-use DI\HKT\HigherKindedContainerInterface;
-use DI\HKT\TypeParameters\TypeParametersInterface;
+use DI\HKT\Container\HigherKindedContainerInterface;
+use DI\HKT\Container\TypeParameters\TypeParametersInterface;
 
 /**
  * Represents a reference to another entry.

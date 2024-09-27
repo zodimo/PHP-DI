@@ -7,8 +7,8 @@ namespace DI\HKT\Definition;
 use DI\Definition\Dumper\ObjectDefinitionDumper;
 use DI\Definition\ObjectDefinition\PropertyInjection;
 use DI\Definition\Source\DefinitionArray;
+use DI\HKT\Container\TypeParameters\TypeParametersInterface;
 use DI\HKT\Definition\ObjectDefinition\MethodInjection;
-use DI\HKT\TypeParameters\TypeParametersInterface;
 use ReflectionClass;
 
 /**

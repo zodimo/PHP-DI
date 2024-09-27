@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace DI\HKT\Definition\Resolver;
 
+use DI\HKT\Container\HigherKindedContainerInterface;
 use DI\HKT\Definition\Definition;
 use DI\HKT\Definition\Exception\InvalidDefinition;
 use DI\HKT\Definition\FactoryDefinition;
-use DI\HKT\HigherKindedContainerInterface;
-use DI\Invoker\FactoryParameterResolver;
+use DI\HKT\Invoker\FactoryParameterResolver;
 use Invoker\Exception\NotCallableException;
 use Invoker\Exception\NotEnoughParametersException;
-use Invoker\Invoker;
+use Invoker\HigherKindedInvoker;
 use Invoker\ParameterResolver\AssociativeArrayResolver;
 use Invoker\ParameterResolver\DefaultValueResolver;
 use Invoker\ParameterResolver\NumericArrayResolver;
@@ -27,7 +27,7 @@ use Invoker\ParameterResolver\ResolverChain;
  */
 class FactoryResolver implements DefinitionResolver
 {
-    private ?Invoker $invoker = null;
+    private ?HigherKindedInvoker $invoker = null;
 
     /**
      * The resolver needs a container. This container will be passed to the factory as a parameter
@@ -56,7 +56,7 @@ class FactoryResolver implements DefinitionResolver
                 new DefaultValueResolver,
             ]);
 
-            $this->invoker = new Invoker($parameterResolver, $this->container);
+            $this->invoker = new HigherKindedInvoker($parameterResolver, $this->container);
         }
 
         $callable = $definition->getCallable();

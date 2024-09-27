@@ -5,21 +5,26 @@ declare(strict_types=1);
 namespace DI\HKT;
 
 use DI\DependencyException;
+use DI\HKT\Container\HigherKindedContainerInterface;
+use DI\HKT\Container\TypeParameters\TypeParametersInterface;
 use DI\HKT\Definition\Definition;
+use DI\HKT\Definition\FactoryDefinition;
+use DI\HKT\Definition\Helper\DefinitionHelper;
 use DI\HKT\Definition\Resolver\DefinitionResolver;
 use DI\HKT\Definition\Resolver\ResolverDispatcher;
 use DI\HKT\Definition\Source\DefinitionArray;
 use DI\HKT\Definition\Source\MutableDefinitionSource;
 use DI\HKT\Definition\Source\ReflectionBasedAutowiring;
 use DI\HKT\Definition\Source\SourceChain;
+use DI\HKT\Definition\ValueDefinition;
 use DI\HKT\Proxy\ProxyFactory;
 use DI\HKT\TypeParameters\GenericTypeParameters;
-use DI\HKT\TypeParameters\TypeParametersInterface;
 
 class HigherKindedContainer implements HigherKindedContainerInterface
 {
     /**
      * Map of entries that are already resolved.
+     * @var array<string,mixed>|array<string,array<string,mixed>>
      */
     protected array $resolvedEntries = [];
 
@@ -67,9 +72,47 @@ class HigherKindedContainer implements HigherKindedContainerInterface
         return new self();
     }
 
-    private function getResolvedEntry(string $id, ?TypeParametersInterface $typeParameters)
+    private function getResolvedEntryUnsafe(string $id, TypeParametersInterface $typeParameters) : mixed
     {
+        if ($typeParameters->hasTypeParameters()) {
+            $entry = $this->resolvedEntries[$id][$typeParameters->getHash()] ?? null;
+        } else {
+            $entry = $this->resolvedEntries[$id] ?? null;
+        }
+        if (null === $entry) {
+            throw new \RuntimeException('BUG!! getResolvedEntryUnsafe: I told you it was unsafe!');
+        }
 
+        return $entry;
+    }
+
+    private function hasResolvedEntry(string $id, TypeParametersInterface $typeParameters) : bool
+    {
+        if ($typeParameters->hasTypeParameters()) {
+            return isset($this->resolvedEntries[$id][$typeParameters->getHash()]);
+        }
+
+        return isset($this->resolvedEntries[$id]);
+    }
+
+    private function setResolvedEntry(Definition $definition, mixed $value) : void
+    {
+        $typeParameters = $definition->getTypeParameters();
+        if ($typeParameters->hasTypeParameters()) {
+            $this->resolvedEntries[$definition->getName()][$typeParameters->getHash()] = $value;
+        } else {
+            $this->resolvedEntries[$definition->getName()] = $value;
+        }
+    }
+
+    private function unSetResolvedEntry(Definition $definition) : void
+    {
+        $typeParameters = $definition->getTypeParameters();
+        if ($typeParameters->hasTypeParameters()) {
+            unset($this->resolvedEntries[$definition->getName()][$typeParameters->getHash()]);
+        } else {
+            unset($this->resolvedEntries[$definition->getName()]);
+        }
     }
 
     public function get(string $id, ?TypeParametersInterface $typeParameters = null) : mixed
@@ -78,15 +121,15 @@ class HigherKindedContainer implements HigherKindedContainerInterface
             $typeParameters = GenericTypeParameters::createEmpty();
         }
         // If the entry is already resolved we return it
-        if (isset($this->resolvedEntries[$id]) || array_key_exists($id, $this->resolvedEntries)) {
-            return $this->resolvedEntries[$id];
+        if ($this->hasResolvedEntry($id, $typeParameters)) {
+            return $this->getResolvedEntryUnsafe($id, $typeParameters);
         }
 
         $definition = $this->getDefinition($id, $typeParameters);
 
         $value = $this->resolveDefinition($definition);
 
-        $this->resolvedEntries[$id] = $value;
+        $this->setResolvedEntry($definition, $value);
 
         return $value;
     }
@@ -204,5 +247,48 @@ class HigherKindedContainer implements HigherKindedContainerInterface
         $source->setMutableDefinitionSource(new DefinitionArray($definitions, $autowiring));
 
         return $source;
+    }
+
+    /**
+     * Define an object or a value in the container.
+     *
+     * @param string $name Entry name
+     * @param mixed|DefinitionHelper $value Value, use definition helpers to define objects
+     */
+    public function set(string $name, mixed $value, ?TypeParametersInterface $typeParameters = null) : void
+    {
+        if (null === $typeParameters) {
+            $typeParameters = GenericTypeParameters::createEmpty();
+        }
+
+        if ($value instanceof DefinitionHelper) {
+            $value = $value->getDefinition($name);
+        } elseif ($value instanceof \Closure) {
+            $value = new FactoryDefinition($name, $value);
+        }
+
+        if ($value instanceof ValueDefinition) {
+            $this->resolvedEntries[$name] = $value->getValue();
+        } elseif ($value instanceof Definition) {
+            $value->setName($name);
+            $this->setDefinition($name, $value);
+        } else {
+            $this->resolvedEntries[$name] = $value;
+        }
+    }
+
+    protected function setDefinition(string $name, Definition $definition) : void
+    {
+        if ($name !== $definition->getName()) {
+            throw new \RuntimeException('BUG: setDefinition, names do not match!');
+        }
+        // Clear existing entry if it exists
+        if ($this->hasResolvedEntry($name, $definition->getTypeParameters())) {
+            unset($this->resolvedEntries[$name]);
+            $this->unSetResolvedEntry($definition);
+        }
+        $this->fetchedDefinitions = []; // Completely clear this local cache
+
+        $this->definitionSource->addDefinition($definition);
     }
 }

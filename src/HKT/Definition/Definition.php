@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DI\HKT\Definition;
 
+use DI\HKT\Container\TypeParameters\TypeParametersInterface;
 use DI\HKT\Factory\RequestedEntry;
-use DI\HKT\TypeParameters\TypeParametersInterface;
 
 /**
  * Definition.

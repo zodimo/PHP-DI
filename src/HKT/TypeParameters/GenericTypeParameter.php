@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace DI\HKT\TypeParameters;
 
+use DI\HKT\Container\TypeParameters\TypeParameterInterface;
+
 class GenericTypeParameter implements TypeParameterInterface
 {
     private string $type;

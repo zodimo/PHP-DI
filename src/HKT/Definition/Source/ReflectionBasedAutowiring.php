@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace DI\HKT\Definition\Source;
 
+use DI\HKT\Container\TypeParameters\TypeParametersInterface;
 use DI\HKT\Definition\ObjectDefinition;
 use DI\HKT\Definition\ObjectDefinition\MethodInjection;
 use DI\HKT\Definition\Reference;
-use DI\HKT\TypeParameters\TypeParametersInterface;
 use DI\NotFoundException;
 use ReflectionNamedType;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DI\HKT\Definition;
 
-use DI\HKT\HigherKindedContainerInterface;
+use DI\HKT\Container\HigherKindedContainerInterface;
 
 /**
  * Describes a definition that can resolve itself.

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DI\HKT\Definition\ObjectDefinition;
 
+use DI\HKT\Container\TypeParameters\TypeParametersInterface;
 use DI\HKT\Definition\Definition;
-use DI\HKT\TypeParameters\TypeParametersInterface;
 
 /**
  * Describe an injection in an object method.

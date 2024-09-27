@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace DI\HKT\TypeParameters;
 
+use DI\HKT\Container\TypeParameters\TypeParameterInterface;
+use DI\HKT\Container\TypeParameters\TypeParametersInterface;
+
 class GenericTypeParameters implements TypeParametersInterface
 {
     private array $types;

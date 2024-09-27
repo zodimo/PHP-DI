@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace DI\HKT\Definition\Resolver;
 
+use DI\HKT\Container\HigherKindedContainerInterface;
 use DI\HKT\Definition\DecoratorDefinition;
 use DI\HKT\Definition\Definition;
 use DI\HKT\Definition\Exception\InvalidDefinition;
-use DI\HKT\HigherKindedContainerInterface;
 
 /**
  * Resolves a decorator definition to a value.

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DI\HKT\Invoker;
 
+use DI\HKT\Container\HigherKindedContainerInterface;
 use DI\HKT\Factory\RequestedEntry;
-use DI\HKT\HigherKindedContainerInterface;
 use Invoker\ParameterResolver\ParameterResolver;
 
 use ReflectionFunctionAbstract;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DI\HKT\Factory;
 
-use DI\HKT\TypeParameters\TypeParametersInterface;
+use DI\HKT\Container\TypeParameters\TypeParametersInterface;
 
 /**
  * Represents the container entry that was requested.

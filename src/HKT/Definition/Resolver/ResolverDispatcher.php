@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace DI\HKT\Definition\Resolver;
 
-use DI\Definition\ArrayDefinition;
-use DI\Definition\DecoratorDefinition;
-use DI\Definition\EnvironmentVariableDefinition;
-use DI\Definition\FactoryDefinition;
-use DI\Definition\InstanceDefinition;
-use DI\Definition\ObjectDefinition;
-use DI\Definition\Resolver\ArrayResolver;
-use DI\Definition\Resolver\EnvironmentVariableResolver;
-use DI\Definition\Resolver\FactoryResolver;
-use DI\Definition\Resolver\InstanceInjector;
+use DI\HKT\Container\HigherKindedContainerInterface;
+use DI\HKT\Definition\ArrayDefinition;
+use DI\HKT\Definition\DecoratorDefinition;
 use DI\HKT\Definition\Definition;
+use DI\HKT\Definition\EnvironmentVariableDefinition;
 use DI\HKT\Definition\Exception\InvalidDefinition;
+use DI\HKT\Definition\FactoryDefinition;
+use DI\HKT\Definition\InstanceDefinition;
+use DI\HKT\Definition\ObjectDefinition;
 use DI\HKT\Definition\SelfResolvingDefinition;
-use DI\HKT\HigherKindedContainerInterface;
 use DI\HKT\Proxy\ProxyFactory;
 
 /**

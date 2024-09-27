@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace DI\HKT\Definition\Source;
 
+use DI\HKT\Container\TypeParameters\TypeParametersInterface;
 use DI\HKT\Definition\Exception\InvalidDefinition;
 use DI\HKT\Definition\ObjectDefinition;
-use DI\HKT\TypeParameters\TypeParametersInterface;
 
 /**
  * Source of definitions for entries of the container.
