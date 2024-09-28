@@ -1,0 +1,13 @@
+services:
+  app:
+    build: ./docker/app
+    environment:
+      # If your php.ini parameter contains a dot ("."), you can replace it with a double underscore ("__").
+      PHP_EXTENSION_ACPU: 1
+      PHP_INI_APC__ENABLED: 1
+      PHP_INI_APC__ENABLE_CLI: 1
+      PHP_EXTENSION_XDEBUG: 1
+      XDEBUG_MODE: "debug,develop,profile"
+      XDEBUG_CONFIG: "client_port=9003 client_host=localhost"
+    volumes:
+      - ../:/workspace:cached
