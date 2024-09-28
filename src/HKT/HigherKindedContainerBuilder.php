@@ -10,6 +10,7 @@ use DI\HKT\Definition\Source\DefinitionArray;
 use DI\HKT\Definition\Source\DefinitionSource;
 use DI\HKT\Definition\Source\NoAutowiring;
 use DI\HKT\Definition\Source\ReflectionBasedAutowiring;
+use DI\HKT\Definition\Source\SourceCache;
 use DI\HKT\Definition\Source\SourceChain;
 use DI\HKT\Proxy\ProxyFactory;
 
